@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        img {
+            vertical-align: top;
+        }
+
+        .main {
+            margin: 0 auto;
+            width: 1000px;
+            margin-top: 10px;
+
+        }
+
+        #Q-nav1 {
+            overflow: hidden;
+        }
+
+        .fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+
+    <!--引入工具js-->
+    <script src="my package.js"></script>
+    <script>
+        window.onload = function () {
+            //需求1：当我们滚动界面的时候，被卷曲的头部超过第二个盒子距离顶部的位置，那么直接给第二个盒子加类名.fixed
+            //需求2：当我们滚动界面的时候，被卷曲的头部小于第二个盒子距离顶部的位置，那么直接给第二个盒子取消类名.fixed
+            //步骤：
+            //1.老三步。
+            //2.判断 ，被卷曲的头部的大小
+            //3.满足条件添加类，否则删除类
+
+
+            //1.老三步。
+            var topDiv = document.getElementById("top");
+            var height = topDiv.offsetHeight;
+            var middle = document.getElementById("Q-nav1");
+            var main = document.getElementById("main");
+
+            window.onscroll = function () {
+                //2.判断 ，被卷曲的头部的大小
+                if(scroll().top > height){
+                    //3.满足条件添加类，否则删除类
+                    middle.className += " fixed";
+                    //第二个盒子不占位置了，所以我们给第三个盒子一个上padding占位置，不出现盒子抖动问题
+                    main.style.paddingTop = middle.offsetHeight+"px";
+                }else{
+                    middle.className = "";
+                    //清零
+                    main.style.paddingTop = 0;
+                }
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <div class="top" id="top">
+        <img src="images/top.png" alt=""/>
+    </div>
+    <div id="Q-nav1">
+        <img src="images/nav.png" alt=""/>
+    </div>
+    <div class="main" id="main">
+        <img src="images/main.png" alt=""/>
+    </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div class="box">
+        <input type="text"/>
+        <span>请输入！</span>
+    </div>
+
+    <script>
+        //需求：验证座机号！
+        //直辖市：三位-八位（010-82935150）
+        //普通市：四位-七位（0314-3160186）
+
+        //步骤：
+        //1.老三步。
+        //2.判断input里面的 值，是否符合正则标准。
+        //3.符合给一个样式，不符合给另外一个样式。
+
+
+        //1.老三步。
+        var inp = document.getElementsByTagName("input")[0];
+        var span = inp.nextElementSibling || inp.nextSibling;
+
+        inp.onblur = function () {
+            //2.判断input里面的值，是否符合正则标准。
+//            var reg1 = /^0\d{2}-8\d{7}$/;
+//            var reg1 = /^0\d{3}-3\d{6}$/;
+            //两个都要执行
+            var reg1 = /(^0\d{2}-8\d{7}$)|(^0\d{3}-3\d{6}$)/;
+
+            if(reg1.test(inp.value)){
+                //3.符合给一个样式，不符合给另外一个样式。
+                span.style.color = "green";
+                span.innerHTML = "恭喜您，输入正确！";
+            }else{
+                span.style.color = "red";
+                span.innerHTML = "对不起，您输入的为非法字符！";
+            }
+        }
+
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body {
+            height: 5000px;
+        }
+        img {
+            position: absolute;
+            padding: 10px 0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img src="images/img.jpg" width="100"/>
+
+    <script>
+        //需求：点击页面的任何地方，图片跟随鼠标移动到点击位置。
+        //思路：获取鼠标在页面中的位置，然图片缓慢运动到鼠标点击的位置。
+        //  兼容ie67做pageY和pageX；
+        //  原理：     鼠标在页面的位置 = 被卷去的部分+可视区域部分。
+        //步骤：
+        //1.老三步。
+        //2.获取鼠标在页面中的位置。
+        //3.利用缓动原理，慢慢的运动到指定位置。（包括左右和上下）
+
+        //1.老三步。
+        var img = document.getElementsByTagName("img")[0];
+        var timer = null;
+        var targetx = 0;var targety = 0;
+        var leaderx = 0;var leadery = 0;
+        //给整个文档绑定点击事件获取鼠标的位置。
+        document.onclick = function (event) {
+            //新五步
+            //兼容获取事件对象
+            event = event || window.event;
+            //鼠标在页面的位置 = 被卷去的部分+可视区域部分。
+            var pagey = event.pageY || scroll().top + event.clientY;
+            var pagex = event.pageX || scroll().left + event.clientX;
+
+            //要用定时器，先清定时器
+//            targety = pagey-img.offsetHeight/2;
+//            targetx = pagex-img.offsetWidth/2;
+            targety = pagey-30;
+            targetx = pagex-50;
+            clearInterval(timer);
+            timer = setInterval(function () {
+                //为盒子的位置获取值
+                leaderx = img.offsetLeft;
+                //获取步长
+                var stepx = (targetx-leaderx)/10;
+                //二次处理步长
+                stepx = stepx>0?Math.ceil(stepx):Math.floor(stepx);
+                leaderx = leaderx + stepx;
+                //赋值
+                img.style.left = leaderx + "px";
+
+
+                //为盒子的位置获取值
+                leadery = img.offsetTop;
+                //获取步长
+                var stepy = (targety-leadery)/10;
+                //二次处理步长
+                stepy = stepy>0?Math.ceil(stepy):Math.floor(stepy);
+                leadery = leadery + stepy;
+                //赋值
+                img.style.top = leadery + "px";
+                //清定时器
+
+//                if(Math.abs(targety-img.offsetTop)<=Math.abs(stepy) && Math.abs(targetx-img.offsetLeft)<=Math.abs(stepx)){
+//                    img.style.top = targety + "px";
+//                    img.style.left = targetx + "px";
+//                    clearInterval(timer);
+//                }
+            },30);
+        }
+        //2.获取鼠标在页面中的位置。
+        //3.利用缓动原理，慢慢的运动到指定位置。（先左右后上下）
+
+
+    </script>
+
+
+
+</body>
+</html>

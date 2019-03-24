@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div class="box">
+        <input type="text"/>
+        <span>请输入！</span>
+    </div>
+
+    <script>
+
+        //需求：输入名字，两位-四为。
+        //原理: unicode（\u4e00-\u9fa5）编码{2,4}
+        //步骤：
+        //1.老三步
+        //2.判断input中的value值是否符合正则标准
+        //3.符合给一个样式，不符合给另外一个样式
+
+        //1.老三步
+        var inp = document.getElementsByTagName("input")[0];
+        var span = inp.parentNode.children[1];
+
+        inp.onblur = function () {
+            //unicode（\u4e00-\u9fa5）编码{2,4}
+            var reg = /^[\u4e00-\u9fa5]{2,4}$/;
+            //2.判断input中的value值是否符合正则标准
+            if(reg.test(this.value)){
+                //3.符合给一个样式，不符合给另外一个样式
+                span.style.color = "green";
+                span.innerHTML = "恭喜您，输入正确！";
+            }else{
+                span.style.color = "red";
+                span.innerHTML = "对不起，您输入的为非法字符！";
+            }
+
+        }
+
+
+    </script>
+
+</body>
+</html>
